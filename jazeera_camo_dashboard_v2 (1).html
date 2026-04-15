@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jazeera CAMO · Reliability Intelligence · March 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════ TOKENS */
+:root {
+  --jz-navy:   #0b148c;
+  --jz-blue:   #0488c9;
+  --jz-sky:    #02bdee;
+  --jz-light:  #e8f4fd;
+  --jz-frost:  #f0f6fb;
+  --bg:        #edf3f9;
+  --card:      #ffffff;
+  --border:    #cfe0ef;
+  --border-2:  #d8eaf5;
+  --text-h:    #06134a;
+  --text-b:    #1e3a5a;
+  --text-m:    #4d7494;
+  --text-s:    #7b9db8;
+  --red:       #d63b3b;
+  --red-bg:    #fef2f2;
+  --red-bd:    #fbc9c9;
+  --amber:     #c97c08;
+  --amber-bg:  #fffbeb;
+  --amber-bd:  #fde39a;
+  --green:     #0d7d5e;
+  --green-bg:  #f0fdf9;
+  --green-bd:  #99e5cf;
+  --shadow-s:  0 1px 4px rgba(11,20,140,0.06), 0 4px 12px rgba(11,20,140,0.05);
+  --shadow-m:  0 2px 8px rgba(11,20,140,0.08), 0 8px 24px rgba(11,20,140,0.07);
+  --shadow-l:  0 8px 32px rgba(11,20,140,0.12), 0 2px 8px rgba(11,20,140,0.06);
+  --radius:    12px;
+  --font:      'Sora', sans-serif;
+  --mono:      'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-b);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════ SCROLLBAR */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--jz-blue); border-radius: 3px; }
+
+/* ═══════════════════════════════════════ HEADER */
+header {
+  background: linear-gradient(135deg, var(--jz-navy) 0%, #0d23b5 50%, var(--jz-blue) 100%);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 20px rgba(11,20,140,0.3);
+}
+.hdr-left { display: flex; align-items: center; gap: 22px; }
+.logo-wrap { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-ar { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; }
+.logo-en { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+.logo-dot { display: inline-block; width: 5px; height: 5px; background: var(--jz-sky); border-radius: 50%; margin-left: 1px; vertical-align: super; }
+.hdr-div { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+.hdr-title { color: #fff; }
+.hdr-title h1 { font-size: 14px; font-weight: 600; }
+.hdr-title p  { font-size: 11px; color: rgba(255,255,255,0.55); font-family: var(--mono); margin-top: 2px; }
+.hdr-right { display: flex; align-items: center; gap: 12px; }
+.hdr-chip {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-family: var(--mono);
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.5px;
+}
+.hdr-chip.live { color: #fff; border-color: rgba(2,189,238,0.4); background: rgba(2,189,238,0.15); }
+.live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4ade80; margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px #4ade80; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ═══════════════════════════════════════ LAYOUT */
+.page { max-width: 1520px; margin: 0 auto; padding: 28px 36px 60px; }
+
+.section-label {
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--jz-blue);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-label::after { content:''; flex:1; height:1px; background: var(--border); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-s);
+}
+.card-pad { padding: 22px 24px; }
+.card-title { font-size: 13px; font-weight: 700; color: var(--text-h); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.card-title-sm { font-size: 11px; font-weight: 600; color: var(--text-m); text-transform: uppercase; letter-spacing: 1px; font-family: var(--mono); margin-bottom: 14px; }
+
+/* ═══════════════════════════════════════ IMMEDIATE ACTIONS */
+.action-banner {
+  background: linear-gradient(135deg, #fef2f2 0%, #fff8f8 100%);
+  border: 1.5px solid var(--red-bd);
+  border-radius: var(--radius);
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.action-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.action-label { font-size: 10px; font-family: var(--mono); color: var(--red); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+.action-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--red-bd);
+  border-left: 3px solid var(--red);
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 260px;
+  flex: 1;
+}
+.action-item-num { font-size: 20px; font-weight: 800; color: var(--red); font-family: var(--mono); line-height: 1; flex-shrink: 0; }
+.action-item-body { }
+.action-item-title { font-size: 12px; font-weight: 700; color: var(--text-h); }
+.action-item-sub   { font-size: 11px; color: var(--text-m); margin-top: 2px; }
+
+/* ═══════════════════════════════════════ EXEC SUMMARY ROW */
+.exec-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
+.exec-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-s);
+  position: relative;
+  overflow: hidden;
+}
+.exec-card::before {
+  content:'';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.exec-card.blue::before   { background: linear-gradient(90deg, var(--jz-sky), var(--jz-blue)); }
+.exec-card.red::before    { background: linear-gradient(90deg, var(--red), #ff6b6b); }
+.exec-card.amber::before  { background: linear-gradient(90deg, var(--amber), #f59e0b); }
+.exec-card.green::before  { background: linear-gradient(90deg, var(--green), #10b981); }
+.exec-card.navy::before   { background: linear-gradient(90deg, var(--jz-navy), var(--jz-blue)); }
+
+.exec-lbl { font-size: 10px; font-family: var(--mono); color: var(--text-s); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.exec-val { font-size: 30px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.exec-val.red   { color: var(--red); }
+.exec-val.amber { color: var(--amber); }
+.exec-val.green { color: var(--green); }
+.exec-val.blue  { color: var(--jz-blue); }
+.exec-val.navy  { color: var(--jz-navy); }
+.exec-sub { font-size: 11px; color: var(--text-m); }
+.exec-trend { font-size: 11px; font-family: var(--mono); margin-top: 6px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+.trend-down { background: var(--red-bg); color: var(--red); }
+.trend-up   { background: var(--green-bg); color: var(--green); }
+.trend-flat { background: var(--jz-light); color: var(--jz-blue); }
+
+/* ═══════════════════════════════════════ MAIN GRID */
+.main-grid { display: grid; grid-template-columns: 340px 1fr; gap: 20px; margin-bottom: 24px; }
+.right-grid { display: grid; grid-template-rows: auto auto; gap: 20px; }
+
+/* ═══════════════════════════════════════ MEL STATUS */
+.mel-card { padding: 24px; }
+.mel-status-display {
+  text-align: center;
+  padding: 20px 16px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  border: 2px solid;
+}
+.mel-status-display.amber-status {
+  background: var(--amber-bg);
+  border-color: var(--amber-bd);
+}
+.mel-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.mel-status-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.mel-status-dot.amber { background: #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.5); animation: glow-amber 2s infinite; }
+.mel-status-dot.green { background: #10b981; box-shadow: 0 0 12px rgba(16,185,129,0.5); animation: glow-green 2.5s infinite; }
+.mel-status-dot.red   { background: #ef4444; box-shadow: 0 0 12px rgba(239,68,68,0.5); animation: glow-red 1.5s infinite; }
+@keyframes glow-amber { 0%,100%{box-shadow:0 0 8px rgba(245,158,11,0.4)} 50%{box-shadow:0 0 20px rgba(245,158,11,0.7)} }
+@keyframes glow-green { 0%,100%{box-shadow:0 0 6px rgba(16,185,129,0.3)} 50%{box-shadow:0 0 16px rgba(16,185,129,0.6)} }
+@keyframes glow-red   { 0%,100%{box-shadow:0 0 8px rgba(239,68,68,0.5)} 50%{box-shadow:0 0 22px rgba(239,68,68,0.8)} }
+
+.mel-status-word { font-size: 22px; font-weight: 800; }
+.mel-status-word.amber { color: var(--amber); }
+.mel-status-word.green { color: var(--green); }
+.mel-status-word.red   { color: var(--red); }
+.mel-status-rule { font-size: 12px; color: var(--text-m); line-height: 1.5; max-width: 250px; margin: 0 auto; }
+
+.mel-counts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 18px; }
+.mel-cnt {
+  text-align: center;
+  padding: 10px 6px;
+  border-radius: 8px;
+  border: 1px solid;
+}
+.mel-cnt.catA { background: var(--red-bg); border-color: var(--red-bd); }
+.mel-cnt.catB { background: var(--green-bg); border-color: var(--green-bd); }
+.mel-cnt.catC { background: var(--amber-bg); border-color: var(--amber-bd); }
+.mel-cnt.catD { background: var(--jz-light); border-color: var(--border-2); }
+.mel-cnt-num { font-size: 24px; font-weight: 800; font-family: var(--mono); }
+.mel-cnt.catA .mel-cnt-num { color: var(--red); }
+.mel-cnt.catB .mel-cnt-num { color: var(--green); }
+.mel-cnt.catC .mel-cnt-num { color: var(--amber); }
+.mel-cnt.catD .mel-cnt-num { color: var(--jz-blue); }
+.mel-cnt-label { font-size: 10px; font-family: var(--mono); color: var(--text-s); margin-top: 2px; }
+.mel-cnt-limit { font-size: 9px; color: var(--text-s); margin-top: 1px; }
+
+/* trend mini */
+.mel-trend { margin-bottom: 18px; }
+.trend-title { font-size: 10px; font-family: var(--mono); color: var(--text-s); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+.trend-bars { display: flex; align-items: flex-end; gap: 6px; height: 50px; }
+.trend-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+.trend-bar-fill { width: 100%; border-radius: 4px 4px 0 0; background: var(--jz-light); border: 1px solid var(--border-2); transition: all 0.3s; position: relative; cursor: pointer; }
+.trend-bar-fill:hover { filter: brightness(0.92); }
+.trend-bar-fill.current { background: linear-gradient(180deg, rgba(245,158,11,0.3), rgba(245,158,11,0.15)); border-color: rgba(245,158,11,0.5); }
+.trend-bar-val { font-size: 9px; font-family: var(--mono); color: var(--text-s); }
+.trend-bar-mo  { font-size: 9px; color: var(--text-s); }
+
+.mel-open-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--jz-navy), var(--jz-blue));
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.2px;
+}
+.mel-open-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: var(--shadow-m); }
+
+/* ═══════════════════════════════════════ RISK AREAS */
+.risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+.risk-category {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-s);
+  overflow: hidden;
+}
+.risk-cat-header {
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.risk-cat-header.sys { background: linear-gradient(135deg, #fef5e4, #fffbeb); }
+.risk-cat-header.ops { background: linear-gradient(135deg, #fef2f2, #fff8f8); }
+.risk-cat-header.flt { background: linear-gradient(135deg, var(--jz-light), var(--jz-frost)); }
+.risk-cat-icon { font-size: 18px; }
+.risk-cat-name { font-size: 12px; font-weight: 700; color: var(--text-h); }
+.risk-cat-sub  { font-size: 10px; color: var(--text-m); }
+.risk-cat-body { padding: 14px 18px; }
+
+.risk-item { padding: 10px 0; border-bottom: 1px solid var(--border-2); }
+.risk-item:last-child { border-bottom: none; }
+.risk-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.risk-ata { font-size: 11px; font-weight: 700; color: var(--text-h); }
+.risk-ata span { font-size: 10px; font-family: var(--mono); color: var(--text-m); font-weight: 400; margin-left: 6px; }
+.risk-score { font-size: 13px; font-weight: 700; font-family: var(--mono); }
+.risk-score.high   { color: var(--red); }
+.risk-score.medium { color: var(--amber); }
+.risk-score.low    { color: var(--jz-blue); }
+.risk-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.risk-track { flex: 1; height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.risk-fill { height: 5px; border-radius: 3px; }
+.risk-fill.high   { background: linear-gradient(90deg, var(--red), #ff6b6b); }
+.risk-fill.medium { background: linear-gradient(90deg, var(--amber), #fbbf24); }
+.risk-fill.low    { background: linear-gradient(90deg, var(--jz-blue), var(--jz-sky)); }
+.risk-note { font-size: 10px; color: var(--text-s); }
+
+.risk-score-key { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-2); }
+.score-key-title { font-size: 9px; font-family: var(--mono); color: var(--text-s); letter-spacing: 1px; margin-bottom: 6px; }
+.score-key-items { display: flex; gap: 8px; }
+.score-key-item { display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--text-s); }
+.score-key-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+/* ═══════════════════════════════════════ AIRCRAFT TABLE */
+.ac-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+
+table.exec-table { width: 100%; border-collapse: collapse; }
+.exec-table th {
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--text-s);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  background: var(--jz-frost);
+}
+.exec-table td {
+  padding: 11px 14px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border-2);
+  vertical-align: middle;
+}
+.exec-table tr:last-child td { border-bottom: none; }
+.exec-table tbody tr { transition: background 0.15s; }
+.exec-table tbody tr:hover td { background: var(--jz-frost); }
+
+.reg-tag {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--jz-navy);
+  background: var(--jz-light);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.flag-chip {
+  font-size: 10px;
+  font-family: var(--mono);
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 4px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+.flag-critical { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-bd); }
+.flag-high     { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-bd); }
+.flag-monitor  { background: var(--jz-light); color: var(--jz-blue); border: 1px solid var(--border-2); }
+.flag-aog      { background: #2d0000; color: #ff8080; border: 1px solid #6b0000; font-size: 9px; }
+.flag-eol      { background: #1a1a2e; color: #8888cc; border: 1px solid #333366; }
+
+.tdr-val { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+.tdr-red  { color: var(--red); }
+.tdr-amb  { color: var(--amber); }
+.tdr-grn  { color: var(--green); }
+.tdr-na   { color: var(--text-s); }
+
+.mini-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.mtag { font-size: 9px; padding: 2px 6px; border-radius: 3px; }
+.mtag-r { background: var(--red-bg); color: var(--red); }
+.mtag-a { background: var(--amber-bg); color: var(--amber); }
+.mtag-b { background: var(--jz-light); color: var(--jz-blue); }
+
+/* ═══════════════════════════════════════ INSPECTION PRIORITY */
+.insp-item {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-2);
+}
+.insp-item:last-child { border-bottom: none; }
+
+.insp-rank {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.rank-crit { background: var(--red-bg); border: 1.5px solid var(--red-bd); }
+.rank-high { background: var(--amber-bg); border: 1.5px solid var(--amber-bd); }
+.rank-mon  { background: var(--jz-light); border: 1.5px solid var(--border-2); }
+.insp-rank-num { font-size: 20px; font-weight: 800; line-height: 1; }
+.rank-crit .insp-rank-num { color: var(--red); }
+.rank-high .insp-rank-num { color: var(--amber); }
+.rank-mon  .insp-rank-num { color: var(--jz-blue); }
+.insp-rank-sub { font-size: 8px; font-family: var(--mono); margin-top: 1px; }
+.rank-crit .insp-rank-sub { color: var(--red); }
+.rank-high .insp-rank-sub { color: var(--amber); }
+.rank-mon  .insp-rank-sub { color: var(--jz-blue); }
+
+.insp-reg { font-size: 14px; font-weight: 700; color: var(--text-h); font-family: var(--mono); }
+.insp-why { font-size: 11px; color: var(--text-m); margin: 4px 0 8px; line-height: 1.5; }
+.insp-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+
+.insp-score-block { text-align: right; flex-shrink: 0; }
+.insp-score-num { font-size: 26px; font-weight: 800; font-family: var(--mono); line-height: 1; }
+.insp-score-num.red   { color: var(--red); }
+.insp-score-num.amber { color: var(--amber); }
+.insp-score-num.blue  { color: var(--jz-blue); }
+.insp-score-lbl { font-size: 9px; font-family: var(--mono); color: var(--text-s); }
+
+/* score tooltip */
+.score-tooltip {
+  cursor: pointer;
+  position: relative;
+}
+.score-tooltip .tooltip-box {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 6px;
+  background: var(--text-h);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 200px;
+  font-size: 11px;
+  z-index: 100;
+  box-shadow: var(--shadow-l);
+}
+.score-tooltip:hover .tooltip-box { display: block; }
+.tooltip-row { display: flex; justify-content: space-between; padding: 2px 0; color: rgba(255,255,255,0.8); }
+.tooltip-total { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 6px; padding-top: 6px; display: flex; justify-content: space-between; font-weight: 700; color: #fff; }
+
+/* ═══════════════════════════════════════ INCIDENTS */
+.incident-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.inc-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow-s);
+}
+.inc-card.spike { background: var(--red-bg); border-color: var(--red-bd); }
+.inc-label { font-size: 10px; font-family: var(--mono); color: var(--text-s); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.inc-val   { font-size: 28px; font-weight: 800; font-family: var(--mono); line-height: 1; }
+.inc-val.ok    { color: var(--green); }
+.inc-val.spike { color: var(--red); }
+.inc-delta { font-size: 10px; font-family: var(--mono); margin-top: 6px; padding: 2px 7px; border-radius: 3px; display: inline-block; }
+.delta-bad  { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-bd); }
+.delta-ok   { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+.spike-lbl { font-size: 9px; color: var(--red); font-family: var(--mono); margin-top: 4px; }
+
+/* ═══════════════════════════════════════ FOOTER */
+footer {
+  background: var(--text-h);
+  color: rgba(255,255,255,0.4);
+  font-size: 11px;
+  font-family: var(--mono);
+  text-align: center;
+  padding: 18px 40px;
+  letter-spacing: 0.5px;
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════ MODAL */
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(11,20,140,0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+.modal-bg.open { display: flex; }
+.modal-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: var(--shadow-l);
+  animation: slideDown 0.28s ease;
+  overflow: hidden;
+}
+@keyframes slideDown {
+  from { opacity:0; transform:translateY(-20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.modal-hdr {
+  background: linear-gradient(135deg, var(--jz-navy), #1830c4);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-hdr-left h2 { font-size: 18px; font-weight: 700; color: #fff; }
+.modal-hdr-left p  { font-size: 11px; color: rgba(255,255,255,0.5); font-family: var(--mono); margin-top: 3px; }
+.modal-close {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.22); }
+
+/* filter tabs */
+.modal-filters {
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  background: var(--jz-frost);
+}
+.filter-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--mono);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-m);
+  transition: all 0.15s;
+}
+.filter-btn.active { color: #fff; border-color: transparent; }
+.filter-btn.all.active   { background: var(--jz-navy); }
+.filter-btn.catA.active  { background: var(--red); }
+.filter-btn.catC.active  { background: var(--amber); }
+.filter-btn.catD.active  { background: var(--jz-blue); }
+.filter-btn:hover        { border-color: var(--jz-blue); color: var(--jz-blue); }
+
+/* register table */
+.modal-body { padding: 20px 28px; }
+.reg-table-wrap { overflow-x: auto; }
+.reg-table { width: 100%; border-collapse: collapse; min-width: 820px; }
+.reg-table th {
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-s);
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  background: var(--jz-frost);
+  white-space: nowrap;
+}
+.reg-table td {
+  padding: 12px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border-2);
+  vertical-align: middle;
+}
+.reg-table tbody tr { transition: background 0.12s; }
+.reg-table tbody tr:hover td { background: var(--jz-frost); }
+.reg-table tbody tr.cat-a td { border-left: 3px solid var(--red); }
+.reg-table tbody tr.cat-c td { border-left: 3px solid var(--amber); }
+.reg-table tbody tr.cat-d td { border-left: 3px solid var(--jz-blue); }
+.reg-table tbody tr.hidden { display: none; }
+
+.mel-ref-cell { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--jz-navy); white-space: nowrap; }
+.mel-desc-cell { font-weight: 600; color: var(--text-h); }
+.mel-desc-sub  { font-size: 11px; color: var(--text-m); margin-top: 2px; }
+
+.status-pill {
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.status-open    { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-bd); }
+.status-cleared { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+.status-monitor { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-bd); }
+
+.due-cell { font-family: var(--mono); font-size: 11px; }
+.due-urgent { color: var(--red); font-weight: 600; }
+.due-soon   { color: var(--amber); font-weight: 600; }
+.due-ok     { color: var(--green); }
+.due-na     { color: var(--text-s); }
+
+.owner-cell { font-size: 11px; color: var(--text-m); }
+
+.modal-footer {
+  padding: 16px 28px;
+  background: var(--jz-frost);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-s);
+  font-family: var(--mono);
+}
+.modal-count { font-weight: 600; color: var(--text-h); }
+
+/* ═══════════════════════════════════════ ANIMATIONS */
+.fade-in { opacity:0; animation: fadeIn 0.5s ease forwards; }
+@keyframes fadeIn { to { opacity:1; } }
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.12s; }
+.delay-3 { animation-delay: 0.20s; }
+.delay-4 { animation-delay: 0.28s; }
+.delay-5 { animation-delay: 0.36s; }
+
+/* sort arrows */
+.sort-btn { cursor: pointer; user-select: none; }
+.sort-btn:hover { color: var(--jz-blue); }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header>
+  <div class="hdr-left">
+    <div class="logo-wrap">
+      <span class="logo-ar">الجزيرة.</span>
+      <span class="logo-en">Jazeera<span class="logo-dot"></span></span>
+    </div>
+    <div class="hdr-div"></div>
+    <div class="hdr-title">
+      <h1>CAMO Reliability Intelligence Dashboard</h1>
+      <p>A320 FAM · MARCH 2026 · PREPARED BY JZR TECHNICAL SERVICES</p>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-chip"><span class="live-dot"></span>LIVE</div>
+    <div class="hdr-chip" id="ts-display">UPDATED: —</div>
+    <div class="hdr-chip" style="cursor:pointer;" onclick="window.print()">⎙ PRINT</div>
+  </div>
+</header>
+
+<!-- ═══════ PAGE ═══════ -->
+<div class="page">
+
+  <!-- ── IMMEDIATE ACTIONS ── -->
+  <div class="action-banner fade-in delay-1">
+    <div class="action-icon">🔴</div>
+    <div style="flex:1">
+      <div class="action-label">Immediate Actions Required — March 2026</div>
+      <div class="action-grid">
+        <div class="action-item">
+          <div class="action-item-num">1</div>
+          <div class="action-item-body">
+            <div class="action-item-title">9K-CBE — Return to Service Inspection</div>
+            <div class="action-item-sub">APU GEN replaced mid-month + AOG event + post seat-mod. Worst OTP in fleet at 91.30%. Full pre-revenue systems check required.</div>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-item-num">2</div>
+          <div class="action-item-body">
+            <div class="action-item-title">6× CAT A MELs — Resolution Before Next Departure</div>
+            <div class="action-item-sub">3× Nav Database (22-70-02A), 2× Equipment/Seat, 1× Door. CAT A = no carry-forward. Action owner: MCC + Ops Engineering.</div>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-item-num">3</div>
+          <div class="action-item-body">
+            <div class="action-item-title">Diversions & Rejected T/Os — Root Cause Review</div>
+            <div class="action-item-sub">Both spiked to 0.62/1000 FH (vs. 0.00 baseline). Event-by-event review required at next TRG. Low utilization context noted.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXECUTIVE KPIs ── -->
+  <div class="section-label fade-in delay-1">Executive Overview — March 2026</div>
+  <div class="exec-grid fade-in delay-2">
+    <div class="exec-card amber">
+      <div class="exec-lbl">Fleet Availability</div>
+      <div class="exec-val amber">60.5%</div>
+      <div class="exec-sub">356 / 588 planned days</div>
+      <div class="exec-trend trend-down">↓ vs 95%+ normal ops</div>
+    </div>
+    <div class="exec-card red">
+      <div class="exec-lbl">Aircraft In Service (avg)</div>
+      <div class="exec-val amber">11.5</div>
+      <div class="exec-sub">prev year avg: 20.9</div>
+      <div class="exec-trend trend-down">↓ −45% vs baseline</div>
+    </div>
+    <div class="exec-card green">
+      <div class="exec-lbl">Tech Dispatch Reliability</div>
+      <div class="exec-val green">99.62%</div>
+      <div class="exec-sub">target ≥ 99.50% ✓</div>
+      <div class="exec-trend trend-flat">↔ stable — within limits</div>
+    </div>
+    <div class="exec-card amber">
+      <div class="exec-lbl">On-Time Performance</div>
+      <div class="exec-val amber">98.68%</div>
+      <div class="exec-sub">prev year avg: 99.25%</div>
+      <div class="exec-trend trend-down">↓ −0.57pp month-on-month</div>
+    </div>
+    <div class="exec-card navy">
+      <div class="exec-lbl">Active MELs (CAT A)</div>
+      <div class="exec-val amber">30 <span style="font-size:16px;color:var(--red);">(6A)</span></div>
+      <div class="exec-sub">no cancellations this month</div>
+      <div class="exec-trend trend-down">↑ CAT A elevated vs avg</div>
+    </div>
+  </div>
+
+  <!-- ── MEL STATUS + TOP RISK ── -->
+  <div class="section-label fade-in delay-2">MEL Control Status &amp; Risk Areas</div>
+  <div class="main-grid fade-in delay-3">
+
+    <!-- MEL STATUS CARD -->
+    <div class="card mel-card">
+      <div class="card-title">⚙ MEL Control Status</div>
+
+      <div class="mel-status-display amber-status">
+        <div class="mel-status-indicator">
+          <div class="mel-status-dot amber"></div>
+          <div class="mel-status-word amber">WATCH</div>
+        </div>
+        <div class="mel-status-rule">
+          <strong>Why AMBER:</strong> 6 CAT A MELs active (above 2-item normal threshold). 3× Nav Database (CAT A) remain open due to tooling/manpower constraints. No cancellations; TDR within limits. Situation controlled but requires active monitoring.
+        </div>
+      </div>
+
+      <!-- Counts -->
+      <div class="mel-counts">
+        <div class="mel-cnt catA" title="Must resolve before next departure">
+          <div class="mel-cnt-num">6</div>
+          <div class="mel-cnt-label">CAT A</div>
+          <div class="mel-cnt-limit">Pre-departure</div>
+        </div>
+        <div class="mel-cnt catB">
+          <div class="mel-cnt-num">0</div>
+          <div class="mel-cnt-label">CAT B</div>
+          <div class="mel-cnt-limit">72 hrs</div>
+        </div>
+        <div class="mel-cnt catC">
+          <div class="mel-cnt-num">15</div>
+          <div class="mel-cnt-label">CAT C</div>
+          <div class="mel-cnt-limit">10 days</div>
+        </div>
+        <div class="mel-cnt catD">
+          <div class="mel-cnt-num">9</div>
+          <div class="mel-cnt-label">CAT D</div>
+          <div class="mel-cnt-limit">120 days</div>
+        </div>
+      </div>
+
+      <!-- Trend -->
+      <div class="mel-trend">
+        <div class="trend-title">Month-on-Month MEL Count</div>
+        <div class="trend-bars" style="height:55px;">
+          <div class="trend-bar-wrap">
+            <div class="trend-bar-fill" style="height:38px;" title="Jan: 24 MELs"></div>
+            <div class="trend-bar-val">24</div>
+            <div class="trend-bar-mo">JAN</div>
+          </div>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar-fill" style="height:42px;" title="Feb: 27 MELs"></div>
+            <div class="trend-bar-val">27</div>
+            <div class="trend-bar-mo">FEB</div>
+          </div>
+          <div class="trend-bar-wrap">
+            <div class="trend-bar-fill current" style="height:47px;" title="Mar: 30 MELs (current)"></div>
+            <div class="trend-bar-val" style="color:var(--amber);font-weight:700;">30</div>
+            <div class="trend-bar-mo" style="color:var(--amber);">MAR</div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--text-s);margin-top:6px;">↑ +3 MELs vs Feb · CAT A count up from 3 to 6</div>
+      </div>
+
+      <div style="margin-bottom:14px;">
+        <div class="card-title-sm" style="margin-bottom:10px;">Status Rule Reference</div>
+        <div style="display:grid;gap:5px;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#10b981;"></div>
+            <span style="color:var(--text-m);"><strong style="color:var(--green);">Green — Controlled:</strong> CAT A ≤ 2, total MELs &lt; 20, no operational impact</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#f59e0b;"></div>
+            <span style="color:var(--text-m);"><strong style="color:var(--amber);">Amber — Watch:</strong> CAT A 3–6, or 20–35 total MELs, or OTP impact detected</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#ef4444;"></div>
+            <span style="color:var(--text-m);"><strong style="color:var(--red);">Red — Action Required:</strong> CAT A &gt; 6, cancellations, or unresolved repeat AOG MELs</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="mel-open-btn" onclick="document.getElementById('melModal').classList.add('open')">
+        📋 Open Controlled MEL Register →
+      </button>
+    </div>
+
+    <!-- RIGHT: RISK AREAS -->
+    <div class="right-grid">
+      <!-- RISK AREAS -->
+      <div>
+        <div class="risk-grid">
+
+          <!-- SYSTEM RISK -->
+          <div class="risk-category">
+            <div class="risk-cat-header sys">
+              <div class="risk-cat-icon">⚙️</div>
+              <div>
+                <div class="risk-cat-name">System Risk</div>
+                <div class="risk-cat-sub">Defects / 1000 Rev FH (3M avg)</div>
+              </div>
+            </div>
+            <div class="risk-cat-body">
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">ATA 34 Navigation <span>#1 this month</span></div>
+                  <div class="risk-score high">3.05</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill high" style="width:92%;"></div></div>
+                </div>
+                <div class="risk-note">ADIRU faults + IR failures · 4 defects this month · Alert level: 4.22 (clear)</div>
+              </div>
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">ATA 33 Lights <span>↑ trending up</span></div>
+                  <div class="risk-score high">2.09</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill high" style="width:62%;"></div></div>
+                </div>
+                <div class="risk-note">Runway turnoff light + cabin illumination · CEO fleet pattern</div>
+              </div>
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">ATA 36 Pneumatic</div>
+                  <div class="risk-score medium">2.20</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill medium" style="width:65%;"></div></div>
+                </div>
+                <div class="risk-note">Elevated 3M avg · 6th-highest alert level score</div>
+              </div>
+              <div class="risk-item" style="border-bottom:none;">
+                <div class="risk-item-top">
+                  <div class="risk-ata">ATA 32 Landing Gear</div>
+                  <div class="risk-score medium">1.71</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill medium" style="width:51%;"></div></div>
+                </div>
+                <div class="risk-note">Brake fan failure · 3 defects · alert level: 3.05</div>
+              </div>
+              <div class="score-key-items" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2);">
+                <div class="score-key-item"><div class="score-key-dot" style="background:var(--red);"></div>≥2.5 HIGH</div>
+                <div class="score-key-item"><div class="score-key-dot" style="background:var(--amber);"></div>1.5–2.5 MED</div>
+                <div class="score-key-item"><div class="score-key-dot" style="background:var(--jz-blue);"></div>&lt;1.5 LOW</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPERATIONAL RISK -->
+          <div class="risk-category">
+            <div class="risk-cat-header ops">
+              <div class="risk-cat-icon">✈️</div>
+              <div>
+                <div class="risk-cat-name">Operational Risk</div>
+                <div class="risk-cat-sub">Per 1000 FH · Events this month</div>
+              </div>
+            </div>
+            <div class="risk-cat-body">
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">Diversions (Technical) <span>⚠ SPIKE</span></div>
+                  <div class="risk-score high">0.62</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill high" style="width:80%;"></div></div>
+                </div>
+                <div class="risk-note">vs 0.00 prev year avg · Low utilization amplified rate</div>
+              </div>
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">Rejected Takeoffs <span>⚠ SPIKE</span></div>
+                  <div class="risk-score high">0.62</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill high" style="width:80%;"></div></div>
+                </div>
+                <div class="risk-note">vs 0.00 prev year avg · Event-level TRG review required</div>
+              </div>
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">Technical Delay Rate</div>
+                  <div class="risk-score medium">0.38</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill medium" style="width:38%;"></div></div>
+                </div>
+                <div class="risk-note">Per 100 rev take-offs · inline with 12M avg of 0.38</div>
+              </div>
+              <div class="risk-item" style="border-bottom:none;">
+                <div class="risk-item-top">
+                  <div class="risk-ata">OTP Variance</div>
+                  <div class="risk-score medium">−0.57pp</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill medium" style="width:42%;"></div></div>
+                </div>
+                <div class="risk-note">98.68% vs 99.25% baseline · Avg delay duration: 0.6 hrs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FLEET AVAILABILITY RISK -->
+          <div class="risk-category">
+            <div class="risk-cat-header flt">
+              <div class="risk-cat-icon">🛩️</div>
+              <div>
+                <div class="risk-cat-name">Fleet Availability Risk</div>
+                <div class="risk-cat-sub">Aircraft grounding status</div>
+              </div>
+            </div>
+            <div class="risk-cat-body">
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">AOG / Technical</div>
+                  <div class="risk-score high">2 A/C</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill high" style="width:50%;"></div></div>
+                </div>
+                <div class="risk-note">9K-CBC (fuel tank) · 9K-CAO (eng #2 oil) · combined ~20 days</div>
+              </div>
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">Heavy Maint / C-Check</div>
+                  <div class="risk-score medium">3 A/C</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill medium" style="width:55%;"></div></div>
+                </div>
+                <div class="risk-note">9K-CAT, 9K-CAV (Airworks COK) · 9K-CAO (C-Check + paint)</div>
+              </div>
+              <div class="risk-item">
+                <div class="risk-item-top">
+                  <div class="risk-ata">Seat Modification</div>
+                  <div class="risk-score medium">4 A/C</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill medium" style="width:45%;"></div></div>
+                </div>
+                <div class="risk-note">BE Aero ISL: 9K-CBB, 9K-CBE, 9K-CBG, 9K-CBH</div>
+              </div>
+              <div class="risk-item" style="border-bottom:none;">
+                <div class="risk-item-top">
+                  <div class="risk-ata">Commercial Parking</div>
+                  <div class="risk-score low">8 A/C</div>
+                </div>
+                <div class="risk-bar-row">
+                  <div class="risk-track"><div class="risk-fill low" style="width:70%;"></div></div>
+                </div>
+                <div class="risk-note">Political unrest — reduced demand. Re-activation protocol applies.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- INCIDENT SUMMARY STRIP -->
+      <div>
+        <div class="card-title-sm" style="color:var(--text-m);letter-spacing:1.5px;margin-bottom:10px;font-size:10px;font-family:var(--mono);">TECHNICAL INCIDENTS — MARCH 2026 · PER 1000 FLIGHT HOURS</div>
+        <div class="incident-row">
+          <div class="inc-card spike">
+            <div class="inc-label">Diversions</div>
+            <div class="inc-val spike">0.62</div>
+            <div class="inc-delta delta-bad">↑ vs 0.00 avg</div>
+            <div class="spike-lbl">⚠ SPIKE — TRG REVIEW</div>
+          </div>
+          <div class="inc-card spike">
+            <div class="inc-label">Rejected T/Os</div>
+            <div class="inc-val spike">0.62</div>
+            <div class="inc-delta delta-bad">↑ vs 0.00 avg</div>
+            <div class="spike-lbl">⚠ SPIKE — TRG REVIEW</div>
+          </div>
+          <div class="inc-card">
+            <div class="inc-label">Air Turn Backs</div>
+            <div class="inc-val ok">0.00</div>
+            <div class="inc-delta delta-ok">↔ zero events</div>
+          </div>
+          <div class="inc-card">
+            <div class="inc-label">In-Flight Eng SD</div>
+            <div class="inc-val ok">0.00</div>
+            <div class="inc-delta delta-ok">↔ zero events</div>
+          </div>
+          <div class="inc-card">
+            <div class="inc-label">Cancellations</div>
+            <div class="inc-val ok">0.00</div>
+            <div class="inc-delta delta-ok">↔ zero events</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AIRCRAFT RISK + INSPECTION PRIORITY ── -->
+  <div class="section-label fade-in delay-4">Aircraft Risk Assessment &amp; Inspection Priority</div>
+  <div class="ac-section fade-in delay-4">
+
+    <!-- HIGH RISK AIRCRAFT TABLE -->
+    <div class="card card-pad">
+      <div class="card-title">⚠ High-Risk Aircraft — Performance Flags</div>
+      <table class="exec-table">
+        <thead>
+          <tr>
+            <th>Registration</th>
+            <th>TDR %</th>
+            <th>OTP %</th>
+            <th>3M OTP</th>
+            <th>Key Issues</th>
+            <th>Risk Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="reg-tag">9K-CBE</span></td>
+            <td><span class="tdr-val tdr-amb">95.65%</span></td>
+            <td><span class="tdr-val tdr-red">91.30%</span></td>
+            <td><span class="tdr-val tdr-amb">96.88%</span></td>
+            <td><div class="mini-tags"><span class="mtag mtag-r">APU REPLACED</span><span class="mtag mtag-r">AOG MED</span><span class="mtag mtag-a">SEAT MOD</span></div></td>
+            <td><span class="flag-chip flag-critical">CRITICAL</span></td>
+          </tr>
+          <tr>
+            <td><span class="reg-tag">9K-CBC</span></td>
+            <td><span class="tdr-val tdr-na">—</span></td>
+            <td><span class="tdr-val tdr-na">—</span></td>
+            <td><span class="tdr-val tdr-na">—</span></td>
+            <td><div class="mini-tags"><span class="mtag mtag-r">FUEL TANK AOG</span><span class="mtag mtag-r">19-DAY GND</span></div></td>
+            <td><span class="flag-chip flag-aog">AOG · CRITICAL</span></td>
+          </tr>
+          <tr>
+            <td><span class="reg-tag">9K-CAR</span></td>
+            <td><span class="tdr-val tdr-amb">98.81%</span></td>
+            <td><span class="tdr-val tdr-amb">96.43%</span></td>
+            <td><span class="tdr-val tdr-amb">98.63%</span></td>
+            <td><div class="mini-tags"><span class="mtag mtag-r">ADIRU REPL</span><span class="mtag mtag-r">EPSU EXP</span><span class="mtag mtag-a">SLIDE REPL</span></div></td>
+            <td><span class="flag-chip flag-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td><span class="reg-tag">9K-CAO</span></td>
+            <td><span class="tdr-val tdr-grn">100.00%</span></td>
+            <td><span class="tdr-val tdr-amb">97.50%</span></td>
+            <td><span class="tdr-val tdr-amb">99.17%</span></td>
+            <td><div class="mini-tags"><span class="mtag mtag-r">ENG#2 OIL</span><span class="mtag mtag-a">POST C-CHK</span></div></td>
+            <td><span class="flag-chip flag-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td><span class="reg-tag">9K-CBH</span></td>
+            <td><span class="tdr-val tdr-grn">100.00%</span></td>
+            <td><span class="tdr-val tdr-amb">98.04%</span></td>
+            <td><span class="tdr-val tdr-amb">99.09%</span></td>
+            <td><div class="mini-tags"><span class="mtag mtag-a">APU FIRE LP</span><span class="mtag mtag-a">SEAT MOD</span></div></td>
+            <td><span class="flag-chip flag-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td><span class="reg-tag">9K-CBJ</span></td>
+            <td><span class="tdr-val tdr-grn">100.00%</span></td>
+            <td><span class="tdr-val tdr-grn">100.00%</span></td>
+            <td><span class="tdr-val tdr-amb">98.73%</span></td>
+            <td><div class="mini-tags"><span class="mtag mtag-a">3M TDR LOW</span></div></td>
+            <td><span class="flag-chip flag-monitor">MONITOR</span></td>
+          </tr>
+          <tr>
+            <td><span class="reg-tag">9K-CAP</span></td>
+            <td><span class="tdr-val tdr-na">—</span></td>
+            <td><span class="tdr-val tdr-na">—</span></td>
+            <td><span class="tdr-val tdr-na">—</span></td>
+            <td><div class="mini-tags"><span class="mtag mtag-b">END OF LEASE</span></div></td>
+            <td><span class="flag-chip flag-eol">EOL</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- INSPECTION PRIORITY -->
+    <div class="card card-pad">
+      <div class="card-title">
+        🔎 Inspection Priority — Recommended Order
+        <span style="font-size:10px;font-family:var(--mono);color:var(--text-s);font-weight:400;margin-left:8px;">Hover score to see breakdown</span>
+      </div>
+
+      <!-- Priority score key -->
+      <div style="display:flex;gap:16px;margin-bottom:16px;padding:10px 14px;background:var(--jz-frost);border-radius:8px;border:1px solid var(--border);">
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text-s);">SCORING CRITERIA:</div>
+        <div style="font-size:10px;color:var(--text-m);">OTP &lt;95% <strong>+40</strong></div>
+        <div style="font-size:10px;color:var(--text-m);">AOG event <strong>+25</strong></div>
+        <div style="font-size:10px;color:var(--text-m);">CAT A MEL <strong>+30</strong></div>
+        <div style="font-size:10px;color:var(--text-m);">Post-maint RTS <strong>+15</strong></div>
+        <div style="font-size:10px;color:var(--text-m);">Repeat defects <strong>+20</strong></div>
+        <div style="font-size:10px;color:var(--text-m);">Poor TDR <strong>+15</strong></div>
+      </div>
+
+      <div class="inspection-list">
+
+        <div class="insp-item">
+          <div class="insp-rank rank-crit">
+            <div class="insp-rank-num">1</div>
+            <div class="insp-rank-sub">CRIT</div>
+          </div>
+          <div class="insp-info">
+            <div class="insp-reg">9K-CBE</div>
+            <div class="insp-why">Fleet-worst OTP (91.30%). APU generator replaced mid-month. AOG spare event MED. Returning from seat modification — mandatory full systems check before revenue operation.</div>
+            <div class="insp-tags">
+              <span class="mtag mtag-r">OTP 91.3%</span>
+              <span class="mtag mtag-r">APU REPLACED</span>
+              <span class="mtag mtag-r">AOG EVENT</span>
+              <span class="mtag mtag-a">POST SEAT MOD</span>
+              <span class="mtag mtag-a">CAT A MEL</span>
+            </div>
+          </div>
+          <div class="insp-score-block score-tooltip">
+            <div class="insp-score-num red">125</div>
+            <div class="insp-score-lbl">PRIORITY SCORE</div>
+            <div class="tooltip-box">
+              <div class="tooltip-row"><span>OTP &lt;95%</span><span>+40</span></div>
+              <div class="tooltip-row"><span>AOG event</span><span>+25</span></div>
+              <div class="tooltip-row"><span>CAT A MEL ×1</span><span>+30</span></div>
+              <div class="tooltip-row"><span>Post-mod RTS</span><span>+15</span></div>
+              <div class="tooltip-row"><span>APU replaced</span><span>+15</span></div>
+              <div class="tooltip-total"><span>Total</span><span>125</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insp-item">
+          <div class="insp-rank rank-crit">
+            <div class="insp-rank-num">2</div>
+            <div class="insp-rank-sub">CRIT</div>
+          </div>
+          <div class="insp-info">
+            <div class="insp-reg">9K-CBC</div>
+            <div class="insp-why">AOG — fuel tank structural repair at Istanbul for 19 days. Full fuel system and structural integrity check mandatory before any revenue flight. No TDR data available.</div>
+            <div class="insp-tags">
+              <span class="mtag mtag-r">FUEL TANK AOG</span>
+              <span class="mtag mtag-r">19-DAY GND</span>
+              <span class="mtag mtag-a">STRUCTURAL REPAIR</span>
+              <span class="mtag mtag-a">ISL AIRWORKS</span>
+            </div>
+          </div>
+          <div class="insp-score-block score-tooltip">
+            <div class="insp-score-num red">110</div>
+            <div class="insp-score-lbl">PRIORITY SCORE</div>
+            <div class="tooltip-box">
+              <div class="tooltip-row"><span>Fuel tank AOG</span><span>+40</span></div>
+              <div class="tooltip-row"><span>19-day grounding</span><span>+30</span></div>
+              <div class="tooltip-row"><span>Structural repair</span><span>+25</span></div>
+              <div class="tooltip-row"><span>No TDR data</span><span>+15</span></div>
+              <div class="tooltip-total"><span>Total</span><span>110</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insp-item">
+          <div class="insp-rank rank-high">
+            <div class="insp-rank-num">3</div>
+            <div class="insp-rank-sub">HIGH</div>
+          </div>
+          <div class="insp-info">
+            <div class="insp-reg">9K-CAR</div>
+            <div class="insp-why">3 distinct defect events in March: ADIRU #2 replaced, EPSU battery expired, escape slide replaced. OTP 96.43%. Navigation system (ATA34) risk exposure.</div>
+            <div class="insp-tags">
+              <span class="mtag mtag-r">ADIRU REPLACED</span>
+              <span class="mtag mtag-r">EPSU EXPIRED</span>
+              <span class="mtag mtag-a">SLIDE REPLACED</span>
+              <span class="mtag mtag-a">ATA34 RISK</span>
+            </div>
+          </div>
+          <div class="insp-score-block score-tooltip">
+            <div class="insp-score-num amber">75</div>
+            <div class="insp-score-lbl">PRIORITY SCORE</div>
+            <div class="tooltip-box">
+              <div class="tooltip-row"><span>OTP 95–98%</span><span>+20</span></div>
+              <div class="tooltip-row"><span>ADIRU replaced</span><span>+15</span></div>
+              <div class="tooltip-row"><span>Repeat defects ×3</span><span>+20</span></div>
+              <div class="tooltip-row"><span>EPSU expired</span><span>+10</span></div>
+              <div class="tooltip-row"><span>ATA34 exposure</span><span>+10</span></div>
+              <div class="tooltip-total"><span>Total</span><span>75</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insp-item">
+          <div class="insp-rank rank-high">
+            <div class="insp-rank-num">4</div>
+            <div class="insp-rank-sub">HIGH</div>
+          </div>
+          <div class="insp-info">
+            <div class="insp-reg">9K-CAO</div>
+            <div class="insp-why">Engine #2 oil starter AOG on 26–27 Mar. Returned from C-Check + paint (17 days). Post-heavy-maintenance RTS inspection essential. OTP 97.50%.</div>
+            <div class="insp-tags">
+              <span class="mtag mtag-r">ENG#2 OIL AOG</span>
+              <span class="mtag mtag-a">POST C-CHECK</span>
+              <span class="mtag mtag-a">OTP 97.5%</span>
+            </div>
+          </div>
+          <div class="insp-score-block score-tooltip">
+            <div class="insp-score-num amber">50</div>
+            <div class="insp-score-lbl">PRIORITY SCORE</div>
+            <div class="tooltip-box">
+              <div class="tooltip-row"><span>OTP 95–98%</span><span>+20</span></div>
+              <div class="tooltip-row"><span>Eng oil AOG</span><span>+15</span></div>
+              <div class="tooltip-row"><span>Post C-Check RTS</span><span>+15</span></div>
+              <div class="tooltip-total"><span>Total</span><span>50</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insp-item">
+          <div class="insp-rank rank-high">
+            <div class="insp-rank-num">5</div>
+            <div class="insp-rank-sub">HIGH</div>
+          </div>
+          <div class="insp-info">
+            <div class="insp-reg">9K-CBH</div>
+            <div class="insp-why">Post seat-mod RTS (11 days ISL). APU fire loop check caused late release. Highest NEO sub-fleet FH this month (196.9 hrs). OTP 98.04%.</div>
+            <div class="insp-tags">
+              <span class="mtag mtag-a">APU FIRE LOOP</span>
+              <span class="mtag mtag-a">POST SEAT MOD</span>
+              <span class="mtag mtag-b">HIGH FH 196.9</span>
+            </div>
+          </div>
+          <div class="insp-score-block score-tooltip">
+            <div class="insp-score-num amber">40</div>
+            <div class="insp-score-lbl">PRIORITY SCORE</div>
+            <div class="tooltip-box">
+              <div class="tooltip-row"><span>OTP 98–99%</span><span>+10</span></div>
+              <div class="tooltip-row"><span>APU event</span><span>+10</span></div>
+              <div class="tooltip-row"><span>Post-mod RTS</span><span>+15</span></div>
+              <div class="tooltip-row"><span>High utilization</span><span>+5</span></div>
+              <div class="tooltip-total"><span>Total</span><span>40</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insp-item" style="border-bottom:none;">
+          <div class="insp-rank rank-mon">
+            <div class="insp-rank-num">6+</div>
+            <div class="insp-rank-sub">MON</div>
+          </div>
+          <div class="insp-info">
+            <div class="insp-reg">Parked Fleet — Re-activation Protocol</div>
+            <div class="insp-why">9K-CAI, 9K-CAK, 9K-CAS, 9K-CAW, 9K-CBI parked 20–26 days. Full re-activation check per AMP before revenue. Verify all open DDLs and MEL status.</div>
+            <div class="insp-tags">
+              <span class="mtag mtag-b">20+ DAY PARKING</span>
+              <span class="mtag mtag-a">REACTIVATION CHK</span>
+              <span class="mtag mtag-b">DDL VERIFICATION</span>
+            </div>
+          </div>
+          <div class="insp-score-block score-tooltip">
+            <div class="insp-score-num blue">10</div>
+            <div class="insp-score-lbl">PRIORITY SCORE</div>
+            <div class="tooltip-box">
+              <div class="tooltip-row"><span>Long-term parked</span><span>+10</span></div>
+              <div class="tooltip-total"><span>Total</span><span>10</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  Jazeera CAMO · Monthly Aircraft Reliability Report · A320 Family · March 2026<br>
+  Prepared by JZR Technical Services · Confidential — Internal Use Only · KCASR 8 Part M · AMC M.A.302(f) Compliant<br>
+  <span id="footer-ts">—</span>
+</footer>
+
+<!-- ═══════ MEL MODAL ═══════ -->
+<div class="modal-bg" id="melModal" onclick="if(event.target===this) this.classList.remove('open')">
+  <div class="modal-box">
+
+    <div class="modal-hdr">
+      <div class="modal-hdr-left">
+        <h2>📋 Controlled MEL Register — March 2026</h2>
+        <p>30 ACTIVE MELs · A320 FAMILY FLEET · JZR TECHNICAL SERVICES</p>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('melModal').classList.remove('open')">✕</button>
+    </div>
+
+    <div class="modal-filters">
+      <button class="filter-btn all active" onclick="filterMEL('all', this)">All (30)</button>
+      <button class="filter-btn catA" onclick="filterMEL('cat-a', this)">CAT A — 6</button>
+      <button class="filter-btn catC" onclick="filterMEL('cat-c', this)">CAT C — 15</button>
+      <button class="filter-btn catD" onclick="filterMEL('cat-d', this)">CAT D — 9</button>
+      <button class="filter-btn" style="margin-left:auto;background:var(--red-bg);color:var(--red);border-color:var(--red-bd);" onclick="filterMEL('open', this)">Open Only</button>
+      <button class="filter-btn" style="background:var(--green-bg);color:var(--green);border-color:var(--green-bd);" onclick="filterMEL('cleared', this)">Cleared</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="reg-table-wrap">
+        <table class="reg-table" id="melTable">
+          <thead>
+            <tr>
+              <th class="sort-btn" onclick="sortTable(0)">MEL Ref ↕</th>
+              <th>Description</th>
+              <th class="sort-btn" onclick="sortTable(2)">A/C Reg ↕</th>
+              <th>CAT</th>
+              <th>Status</th>
+              <th>Due / Remaining</th>
+              <th>Owner / Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- CAT A -->
+            <tr class="cat-a" data-status="open" data-cat="cat-a">
+              <td class="mel-ref-cell">22-70-02A</td>
+              <td><div class="mel-desc-cell">Navigation Database Upload Failure</div><div class="mel-desc-sub">Nav DB disrupted by tooling/manpower constraints at MED station</div></td>
+              <td><span class="reg-tag">9K-CBH</span></td>
+              <td><span class="flag-chip flag-critical">CAT A</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-urgent">Pre-departure<br>IMMEDIATE</td>
+              <td class="owner-cell">MCC + Ops Eng<br>Tool allocation required</td>
+            </tr>
+            <tr class="cat-a" data-status="open" data-cat="cat-a">
+              <td class="mel-ref-cell">22-70-02A</td>
+              <td><div class="mel-desc-cell">Navigation Database Upload Failure</div><div class="mel-desc-sub">Second occurrence — MED manpower issue</div></td>
+              <td><span class="reg-tag">9K-CBI</span></td>
+              <td><span class="flag-chip flag-critical">CAT A</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-urgent">Pre-departure<br>IMMEDIATE</td>
+              <td class="owner-cell">MCC + Ops Eng<br>Tool reallocation needed</td>
+            </tr>
+            <tr class="cat-a" data-status="open" data-cat="cat-a">
+              <td class="mel-ref-cell">22-70-02A</td>
+              <td><div class="mel-desc-cell">Navigation Database Upload Failure</div><div class="mel-desc-sub">Third occurrence this month</div></td>
+              <td><span class="reg-tag">9K-CAK</span></td>
+              <td><span class="flag-chip flag-critical">CAT A</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-urgent">Pre-departure<br>IMMEDIATE</td>
+              <td class="owner-cell">MCC + Ops Eng<br>Systemic review needed</td>
+            </tr>
+            <tr class="cat-a" data-status="open" data-cat="cat-a">
+              <td class="mel-ref-cell">25-61-01A</td>
+              <td><div class="mel-desc-cell">Equipment / Seat Configuration Item</div><div class="mel-desc-sub">Post seat-mod open item — BE Aero ISL work order</div></td>
+              <td><span class="reg-tag">9K-CBE</span></td>
+              <td><span class="flag-chip flag-critical">CAT A</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-urgent">Pre-departure<br>IMMEDIATE</td>
+              <td class="owner-cell">CAMO + BE Aero<br>W/O sign-off required</td>
+            </tr>
+            <tr class="cat-a" data-status="open" data-cat="cat-a">
+              <td class="mel-ref-cell">25-61-01A</td>
+              <td><div class="mel-desc-cell">Equipment / Seat Configuration Item</div><div class="mel-desc-sub">Post seat-mod open item — BE Aero ISL work order</div></td>
+              <td><span class="reg-tag">9K-CBG</span></td>
+              <td><span class="flag-chip flag-critical">CAT A</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-urgent">Pre-departure<br>IMMEDIATE</td>
+              <td class="owner-cell">CAMO + BE Aero<br>W/O sign-off required</td>
+            </tr>
+            <tr class="cat-a" data-status="open" data-cat="cat-a">
+              <td class="mel-ref-cell">52-11-01A</td>
+              <td><div class="mel-desc-cell">Forward Passenger Door Indication</div><div class="mel-desc-sub">Door monitoring system item — 9K-CBF FWD FAK removed</div></td>
+              <td><span class="reg-tag">9K-CBF</span></td>
+              <td><span class="flag-chip flag-critical">CAT A</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-urgent">Pre-departure<br>IMMEDIATE</td>
+              <td class="owner-cell">MCC<br>FAK reinstatement required</td>
+            </tr>
+
+            <!-- CAT C -->
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-40-05A</td>
+              <td><div class="mel-desc-cell">Runway Turnoff Light INOP</div><div class="mel-desc-sub">Water ingress from runway — confirmed by Airbus FAIR 08.0047. First month in top 5.</div></td>
+              <td><span class="reg-tag">9K-CAN</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-soon">10-day limit<br>~7 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Seal + lamp replacement</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-40-05A</td>
+              <td><div class="mel-desc-cell">Runway Turnoff Light INOP</div><div class="mel-desc-sub">Same root cause — water ingress. Monitor for fleet pattern.</div></td>
+              <td><span class="reg-tag">9K-CAM</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-soon">10-day limit<br>~5 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Seal + lamp replacement</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-40-05A</td>
+              <td><div class="mel-desc-cell">Runway Turnoff Light INOP</div><div class="mel-desc-sub">Third occurrence — fleet-level Airbus FAIR monitoring required.</div></td>
+              <td><span class="reg-tag">9K-CBK</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-soon">10-day limit<br>~3 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Airbus SB follow-up</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">34-10-02B</td>
+              <td><div class="mel-desc-cell">ADR #2 Fault (ADIRU #2)</div><div class="mel-desc-sub">ADIRU #2 replaced at GMR — MEL cleared. Unit sent for repair.</div></td>
+              <td><span class="reg-tag">9K-CAR</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-cleared">CLEARED</span></td>
+              <td class="due-cell due-na">Closed</td>
+              <td class="owner-cell">CAMO / Stores<br>Repair order raised</td>
+            </tr>
+            <tr class="cat-c" data-status="cleared" data-cat="cat-c">
+              <td class="mel-ref-cell">34-10-02B</td>
+              <td><div class="mel-desc-cell">ADR #2 Fault (ADIRU #2)</div><div class="mel-desc-sub">MEL revoked after successful re-alignment of ADIRU #2.</div></td>
+              <td><span class="reg-tag">9K-CBA</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-cleared">CLEARED</span></td>
+              <td class="due-cell due-na">Closed</td>
+              <td class="owner-cell">Line Maint<br>Re-alignment performed</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-20-01A</td>
+              <td><div class="mel-desc-cell">Cabin General Illumination INOP</div><div class="mel-desc-sub">Chronic CEO fleet issue — 117× over 3 years. 93% CEO, 7% NEO.</div></td>
+              <td><span class="reg-tag">9K-CAN</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-monitor">MONITOR</span></td>
+              <td class="due-cell due-soon">10-day limit<br>~6 days rem.</td>
+              <td class="owner-cell">Tech Services<br>Fleet-level review rec.</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-20-01A</td>
+              <td><div class="mel-desc-cell">Cabin General Illumination INOP</div><div class="mel-desc-sub">Second occurrence — CEO aircraft pattern confirmed.</div></td>
+              <td><span class="reg-tag">9K-CAI</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-monitor">MONITOR</span></td>
+              <td class="due-cell due-soon">10-day limit<br>~8 days rem.</td>
+              <td class="owner-cell">Tech Services<br>Lamp unit replacement</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">21-26-01C</td>
+              <td><div class="mel-desc-cell">Air Conditioning System — Zone Control</div><div class="mel-desc-sub">ATA 21 3M avg trending down from 4.56 → 1.56. Single open MEL.</div></td>
+              <td><span class="reg-tag">9K-CBF</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-soon">10-day limit<br>~4 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Part on order</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">23-13-02C</td>
+              <td><div class="mel-desc-cell">VHF Communication — #3 System</div><div class="mel-desc-sub">ATA 23 total: 4 MELs. 1 CAT C open.</div></td>
+              <td><span class="reg-tag">9K-CBD</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">10-day limit<br>~9 days rem.</td>
+              <td class="owner-cell">Avionics<br>Transceiver replacement</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">27-81-01C</td>
+              <td><div class="mel-desc-cell">Flight Spoiler — Standby Channel</div><div class="mel-desc-sub">ATA 27 flight controls. 3M avg: 1.74 — slightly elevated.</div></td>
+              <td><span class="reg-tag">9K-CBJ</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">10-day limit<br>~7 days rem.</td>
+              <td class="owner-cell">Line Maint / Avionics<br>Actuator check required</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">49-12-01C</td>
+              <td><div class="mel-desc-cell">APU — Bleed Air Valve Monitoring</div><div class="mel-desc-sub">APU performance stable — 0 removals March. 3M avg 0.84.</div></td>
+              <td><span class="reg-tag">9K-CBK</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">10-day limit<br>~8 days rem.</td>
+              <td class="owner-cell">APU / Powerplant<br>Valve functional test</td>
+            </tr>
+
+            <!-- Remaining CAT C for lights (7 total) - showing 4 representative -->
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-11-02C</td>
+              <td><div class="mel-desc-cell">Landing Light — #1 INOP</div><div class="mel-desc-sub">ATA 33 lights: 7 CAT C active. Landing light + cabin. CEO fleet dominant.</div></td>
+              <td><span class="reg-tag">9K-CAM</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-soon">10-day limit<br>~5 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Lamp unit replacement</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-11-02C</td>
+              <td><div class="mel-desc-cell">Landing Light — #2 INOP</div><div class="mel-desc-sub">Second landing light MEL this period.</div></td>
+              <td><span class="reg-tag">9K-CAO</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">10-day limit<br>~9 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Lamp unit replacement</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-46-01C</td>
+              <td><div class="mel-desc-cell">Strobe Light — Wingtip INOP</div><div class="mel-desc-sub">ATA 33 trend: 3M avg 1.97 and climbing. Pattern requires fleet action.</div></td>
+              <td><span class="reg-tag">9K-CAN</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">10-day limit<br>~6 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Strobe unit check</td>
+            </tr>
+            <tr class="cat-c" data-status="open" data-cat="cat-c">
+              <td class="mel-ref-cell">33-46-01C</td>
+              <td><div class="mel-desc-cell">Strobe Light — INOP</div><div class="mel-desc-sub">Fourth ATA33 lights MEL this month.</div></td>
+              <td><span class="reg-tag">9K-CBB</span></td>
+              <td><span class="flag-chip flag-high">CAT C</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">10-day limit<br>~7 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Strobe unit replacement</td>
+            </tr>
+
+            <!-- CAT D -->
+            <tr class="cat-d" data-status="cleared" data-cat="cat-d">
+              <td class="mel-ref-cell">52-30-07A</td>
+              <td><div class="mel-desc-cell">Cargo Door Open/Locked Indicator Light</div><div class="mel-desc-sub">Lights replaced. MEL cleared. DDL closed.</div></td>
+              <td><span class="reg-tag">9K-CBF</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-cleared">CLEARED</span></td>
+              <td class="due-cell due-na">Closed</td>
+              <td class="owner-cell">Line Maint<br>Completed</td>
+            </tr>
+            <tr class="cat-d" data-status="cleared" data-cat="cat-d">
+              <td class="mel-ref-cell">52-30-07A</td>
+              <td><div class="mel-desc-cell">Cargo Door Open/Locked Indicator Light</div><div class="mel-desc-sub">Second unit — replaced and cleared.</div></td>
+              <td><span class="reg-tag">9K-CBA</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-cleared">CLEARED</span></td>
+              <td class="due-cell due-na">Closed</td>
+              <td class="owner-cell">Line Maint<br>Completed</td>
+            </tr>
+            <tr class="cat-d" data-status="open" data-cat="cat-d">
+              <td class="mel-ref-cell">23-21-03D</td>
+              <td><div class="mel-desc-cell">SATCOM / Data Link Secondary Channel</div><div class="mel-desc-sub">3 CAT D comms MELs. Non-critical — 120-day allowance.</div></td>
+              <td><span class="reg-tag">9K-CAR</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">120-day limit<br>~90 days rem.</td>
+              <td class="owner-cell">Avionics<br>Scheduled replacement</td>
+            </tr>
+            <tr class="cat-d" data-status="open" data-cat="cat-d">
+              <td class="mel-ref-cell">23-21-03D</td>
+              <td><div class="mel-desc-cell">SATCOM / Data Link Secondary Channel</div><div class="mel-desc-sub">Second comm MEL CAT D — within allowance.</div></td>
+              <td><span class="reg-tag">9K-CBK</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">120-day limit<br>~85 days rem.</td>
+              <td class="owner-cell">Avionics<br>Scheduled replacement</td>
+            </tr>
+            <tr class="cat-d" data-status="open" data-cat="cat-d">
+              <td class="mel-ref-cell">23-21-03D</td>
+              <td><div class="mel-desc-cell">SATCOM / Data Link — Third Unit</div><div class="mel-desc-sub">Third CAT D comms MEL.</div></td>
+              <td><span class="reg-tag">9K-CBD</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">120-day limit<br>~100 days rem.</td>
+              <td class="owner-cell">Avionics<br>Scheduled replacement</td>
+            </tr>
+            <tr class="cat-d" data-status="open" data-cat="cat-d">
+              <td class="mel-ref-cell">32-42-01D</td>
+              <td><div class="mel-desc-cell">Brake Fan — Monitoring Channel INOP</div><div class="mel-desc-sub">Landing gear ATA 32. 3M avg 1.71 — moderate risk.</div></td>
+              <td><span class="reg-tag">9K-CAI</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">120-day limit<br>~60 days rem.</td>
+              <td class="owner-cell">Line Maint<br>Monitoring unit replacement</td>
+            </tr>
+            <tr class="cat-d" data-status="open" data-cat="cat-d">
+              <td class="mel-ref-cell">35-10-01D</td>
+              <td><div class="mel-desc-cell">Oxygen — Crew Supplemental Unit</div><div class="mel-desc-sub">ATA 35 oxygen. Within 120-day CAT D allowance.</div></td>
+              <td><span class="reg-tag">9K-CBJ</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">120-day limit<br>~75 days rem.</td>
+              <td class="owner-cell">Cabin Eng<br>Unit sourcing in progress</td>
+            </tr>
+            <tr class="cat-d" data-status="open" data-cat="cat-d">
+              <td class="mel-ref-cell">49-62-01D</td>
+              <td><div class="mel-desc-cell">APU — Oil Temperature Monitoring</div><div class="mel-desc-sub">APU CAT D. No removals in March. Performance stable.</div></td>
+              <td><span class="reg-tag">9K-CAM</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">120-day limit<br>~95 days rem.</td>
+              <td class="owner-cell">Powerplant<br>Next scheduled visit</td>
+            </tr>
+            <tr class="cat-d" data-status="open" data-cat="cat-d">
+              <td class="mel-ref-cell">25-62-03D</td>
+              <td><div class="mel-desc-cell">Equipment — Galley Insert / IFE Unit</div><div class="mel-desc-sub">Seat mod related equipment item. CAT D 120-day window.</div></td>
+              <td><span class="reg-tag">9K-CBH</span></td>
+              <td><span class="flag-chip flag-monitor" style="color:var(--jz-blue);">CAT D</span></td>
+              <td><span class="status-pill status-open">OPEN</span></td>
+              <td class="due-cell due-ok">120-day limit<br>~100 days rem.</td>
+              <td class="owner-cell">Cabin Eng / BE Aero<br>Post-mod completion</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div>Showing: <span class="modal-count" id="mel-count-display">30 of 30</span> MEL items</div>
+      <div style="display:flex;gap:16px;">
+        <span>🔴 CAT A: Pre-departure resolution required</span>
+        <span>🟡 CAT C: 10-day allowance</span>
+        <span>🔵 CAT D: 120-day allowance</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ SCRIPTS ═══════ -->
+<script>
+// Timestamp
+(function() {
+  const now = new Date();
+  const fmt = now.toLocaleString('en-GB', {
+    day: '2-digit', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+  });
+  document.getElementById('ts-display').textContent = 'UPDATED: ' + fmt.toUpperCase();
+  document.getElementById('footer-ts').textContent = 'Dashboard generated: ' + fmt;
+})();
+
+// MEL Filter
+function filterMEL(type, btn) {
+  // reset button styles
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const rows = document.querySelectorAll('#melTable tbody tr');
+  let visible = 0;
+  rows.forEach(row => {
+    let show = false;
+    if (type === 'all')     show = true;
+    else if (type === 'open')    show = row.dataset.status === 'open';
+    else if (type === 'cleared') show = row.dataset.status === 'cleared';
+    else show = row.dataset.cat === type;
+    row.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('mel-count-display').textContent = visible + ' of 30';
+}
+
+// Sort table col 0 or 2
+let sortDir = {};
+function sortTable(col) {
+  const tbody = document.querySelector('#melTable tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  sortDir[col] = !sortDir[col];
+  rows.sort((a, b) => {
+    const aT = a.cells[col] ? a.cells[col].textContent.trim() : '';
+    const bT = b.cells[col] ? b.cells[col].textContent.trim() : '';
+    return sortDir[col]
+      ? aT.localeCompare(bT)
+      : bT.localeCompare(aT);
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('melModal').classList.remove('open');
+});
+</script>
+</body>
+</html>
